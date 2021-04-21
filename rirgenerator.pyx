@@ -111,5 +111,19 @@ def rir_generator(c,samplingRate,micPositions,srcPosition,LL,**kwargs):
 	cdef np.ndarray[np.double_t, ndim=2] micPos = np.ascontiguousarray(np.transpose(micPositions).astype('double'), dtype=np.double)	
 	cdef np.ndarray[np.double_t, ndim=2] srcPos = np.ascontiguousarray(np.transpose(srcPosition).astype('double'), dtype=np.double)	
 
-	computeRIR(<double *>imp.data,c,samplingRate,<double *>micPos.data,numMics,nsamples,<double *>srcPos.data,<double *>roomDim.data,<double *>beta.data,mtype,order,<double *>angle.data,isHighPassFilter)
+	computeRIR(
+        <double *>imp.data,
+        c,
+        samplingRate,
+        <double *>micPos.data,
+        numMics,
+        nsamples,
+        <double *>srcPos.data,
+        <double *>roomDim.data,
+        <double *>beta.data,
+        mtype.encode(),
+        order,
+        <double *>angle.data,
+        isHighPassFilter
+    )
 	return np.transpose(imp)
